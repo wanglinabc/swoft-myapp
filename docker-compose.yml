@@ -1,14 +1,24 @@
-version: '3'
-
+version: '2'
 services:
-    swoft:
+    swoft-app:
        image: swoft/swoft:latest
-#       build: ./
-       ports:
-         - "80:80"
+       container_name: swoft-app
        volumes:
          - ./:/var/www/swoft
        stdin_open: true 
        tty: true
        privileged: true
-       command: php /var/www/swoft/bin/swoft start
+       entrypoint: php /var/www/swoft/bin/swoft ws:start
+    nginx-app:
+      image: nginx
+      container_name: nginx-app
+      volumes:
+         - ./:/var/www/swoft
+         - ./nginx.conf:/etc/nginx/nginx.conf
+         - /data/nginx/log/:/var/log/nginx/
+      ports:
+          - 80:80
+      links: 
+          - swoft-app   
+
+
