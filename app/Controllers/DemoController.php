@@ -39,7 +39,9 @@ class DemoController
      */
     public function index(Request $request)
     {
-       return "xxwewew";
+        \Swoft\App::error("this debug log");
+        $data=['code'=>200,'msg'=>'我来测试'];
+       return json_encode($data,JSON_UNESCAPED_UNICODE);
     }
 
     
