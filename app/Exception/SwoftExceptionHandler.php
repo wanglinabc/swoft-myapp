@@ -10,9 +10,11 @@
 
 namespace App\Exception;
 
+use App\Utils\SysMessage;
 use Swoft\App;
 use Swoft\Bean\Annotation\ExceptionHandler;
 use Swoft\Bean\Annotation\Handler;
+use Swoft\Bean\Annotation\Inject;
 use Swoft\Exception\RuntimeException;
 use Exception;
 use Swoft\Http\Message\Server\Request;
@@ -20,6 +22,7 @@ use Swoft\Http\Message\Server\Response;
 use Swoft\Exception\BadMethodCallException;
 use Swoft\Exception\ValidatorException;
 use Swoft\Http\Server\Exception\BadRequestException;
+
 
 /**
  * the handler of global exception
@@ -33,38 +36,40 @@ use Swoft\Http\Server\Exception\BadRequestException;
  */
 class SwoftExceptionHandler
 {
+
+    /**
+     *
+     * @Inject()
+     * @var SysMessage
+     */
+    protected $message;
+
     /**
      * @Handler(Exception::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerException(Response $response, \Throwable $throwable)
     {
-        $file      = $throwable->getFile();
-        $line      = $throwable->getLine();
-        $code      = $throwable->getCode();
-        $exception = $throwable->getMessage();
-
-        $data = ['msg' => $exception, 'file' => $file, 'line' => $line, 'code' => $code];
-        App::error(json_encode($data));
+        $data = $this->message->error($throwable->getCode(), $throwable->getMessage());
         return $response->json($data);
     }
 
     /**
      * @Handler(RuntimeException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerRuntimeException(Response $response, \Throwable $throwable)
     {
-        $file      = $throwable->getFile();
-        $code      = $throwable->getCode();
+        $file = $throwable->getFile();
+        $code = $throwable->getCode();
         $exception = $throwable->getMessage();
 
         return $response->json([$exception, 'runtimeException']);
@@ -73,7 +78,7 @@ class SwoftExceptionHandler
     /**
      * @Handler(ValidatorException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
@@ -88,7 +93,7 @@ class SwoftExceptionHandler
     /**
      * @Handler(BadRequestException::class)
      *
-     * @param Response   $response
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
@@ -103,15 +108,15 @@ class SwoftExceptionHandler
     /**
      * @Handler(BadMethodCallException::class)
      *
-     * @param Request    $request
-     * @param Response   $response
+     * @param Request $request
+     * @param Response $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerViewException(Request $request, Response $response, \Throwable $throwable)
     {
-        $name  = $throwable->getMessage(). $request->getUri()->getPath();
+        $name = $throwable->getMessage() . $request->getUri()->getPath();
         $notes = [
             'New Generation of PHP Framework',
             'High Performance, Coroutine and Full Stack',
@@ -138,7 +143,7 @@ class SwoftExceptionHandler
                 'link' => 'https://github.com/swoft-cloud/swoft',
             ],
         ];
-        $data  = compact('name', 'notes', 'links');
+        $data = compact('name', 'notes', 'links');
 
         return view('exception/index', $data);
     }

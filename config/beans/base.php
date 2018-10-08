@@ -10,25 +10,26 @@
 return [
     'serverDispatcher' => [
         'middlewares' => [
-            //  \Swoft\View\Middleware\ViewMiddleware::class,
-             \Swoft\Devtool\Middleware\DevToolMiddleware::class,
+            \Swoft\Devtool\Middleware\DevToolMiddleware::class,
+            \App\Middlewares\CorsMiddleware::class,
             // \Swoft\Session\Middleware\SessionMiddleware::class,
+            //  \Swoft\View\Middleware\ViewMiddleware::class,
         ]
     ],
-    'httpRouter'       => [
-        'ignoreLastSlash'  => false,
+    'httpRouter' => [
+        'ignoreLastSlash' => false,
         'tmpCacheNumber' => 1000,
-        'matchAll'       => '',
+        'matchAll' => '',
     ],
-    'requestParser'    => [
+    'requestParser' => [
         'parsers' => [
 
         ],
     ],
-    'view'             => [
+    'view' => [
         'viewsPath' => '@resources/views/',
     ],
-    'cache'            => [
+    'cache' => [
         'driver' => 'redis',
     ],
     'demoRedis' => [

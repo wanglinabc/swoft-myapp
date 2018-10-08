@@ -8,9 +8,9 @@
  * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace App\Controllers;
+namespace App\Controllers\Api;
 
-use App\Models\Logic\IndexLogic;
+
 use Swoft\App;
 use Swoft\Core\Coroutine;
 use Swoft\Bean\Annotation\Inject;
@@ -25,7 +25,7 @@ use Swoft\Http\Message\Server\Request;
  * 控制器demo
  * @Controller(prefix="/demo2")
  */
-class DemoController
+class AuthController
 {
 
     /**

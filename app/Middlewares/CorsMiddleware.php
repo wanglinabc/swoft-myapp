@@ -25,7 +25,7 @@ use Swoft\Http\Message\Middleware\MiddlewareInterface;
  * @copyright Copyright 2010-2017 Swoft software
  * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
-class SubMiddleware implements MiddlewareInterface
+class CorsMiddleware implements MiddlewareInterface
 {
 
     /**
@@ -39,8 +39,11 @@ class SubMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $response = $handler->handle($request);
-        $response = $response->withAddedHeader('Sub-Middleware-Test', 'success');
-        return $response;
+        if ('OPTIONS' === $request->getMethod()) {
+            return response()->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+        }
+        return $handler->handle($request);
     }
 }
