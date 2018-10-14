@@ -54,7 +54,7 @@ class SwoftExceptionHandler
      */
     public function handlerException(Response $response, \Throwable $throwable)
     {
-        $data = $this->message->error($throwable->getCode(), $throwable->getMessage());
+        $data = $this->message->error( $throwable->getMessage(),$throwable->getCode());
         return $response->json($data);
     }
 

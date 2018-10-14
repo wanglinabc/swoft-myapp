@@ -21,10 +21,10 @@ use App\Utils\SysCode;
  */
 class SysMessage
 {
-    const SYSMSG=[
-        '0'=>"SUCCESS",
-        '1'=>'ERROR',
-        '100000'=>'参数错误！'
+    const SYSMSG = [
+        '0' => "SUCCESS",
+        '1' => 'ERROR',
+        '100000' => '参数错误！'
     ];
 
     /**
@@ -34,9 +34,9 @@ class SysMessage
      * @param array $data 返回数据
      * @return array
      */
-    public function success($code = SysCode::SUCCESS, $data = [],$msg = '')
+    public function success($code = SysCode::SUCCESS, $data = [], $msg = '')
     {
-        return ['msg' => $msg ?? self::SYSMSG[$code], 'code' => $code, 'data' => $data];
+        return ['code' => $code, 'msg' => $msg ?? self::SYSMSG[$code], 'data' => $data];
     }
 
     /**
@@ -46,9 +46,9 @@ class SysMessage
      * @param array $data 返回数据
      * @return array
      */
-    public function error($code = SysCode::ERROR,$msg = '', $data = [])
+    public function error( $msg = '', $code = SysCode::ERROR)
     {
-        return ['msg' => $msg ?? self::SYSMSG[$code], 'code' => $code, 'data' => $data];
+        return ['code' => $code, 'msg' => $msg ?? self::SYSMSG[$code]];
     }
 
     /**
@@ -56,12 +56,12 @@ class SysMessage
      * @param array $data 需要判断的数据
      * @return array
      */
-    public function data($data)
+    public function resp($data)
     {
-        if ($data) {
-            return $this->success(SysCode::SUCCESS,  $data,SysCode::ERROR);
+        if (is_array($data)) {
+            return $this->success(SysCode::SUCCESS, $data, SysCode::ERROR);
         } else {
-            return $this->error(SysCode::ERROR,'');
+            return $this->error(SysCode::ERROR, '');
         }
     }
 }

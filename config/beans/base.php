@@ -12,6 +12,7 @@ return [
         'middlewares' => [
             \Swoft\Devtool\Middleware\DevToolMiddleware::class,
             \App\Middlewares\CorsMiddleware::class,
+            \App\Middlewares\JwtMiddleware::class,
             // \Swoft\Session\Middleware\SessionMiddleware::class,
             //  \Swoft\View\Middleware\ViewMiddleware::class,
         ]
