@@ -13,6 +13,7 @@ use App\Utils\SysCode;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Swoft\App;
 use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
 use Swoft\Bean\Annotation\Bean;
@@ -26,7 +27,7 @@ use App\Utils\JwtToken;
 class JwtMiddleware implements MiddlewareInterface
 {
 
-    protected $is_allow=[];
+    protected $is_allow=['/api/login/index','/admin/login/index','/api/login/logout'];
 
     /**
      * @Inject()
@@ -44,14 +45,13 @@ class JwtMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $uri = $request->getUri();
-        if(in_array($uri,$this->is_allow)){
+        if(in_array($uri->getPath(),$this->is_allow)){
             return $handler->handle($request);
         }
        $token=$request->getHeaderLine('Authorization');
-        if(!isset($token)){
+        if(!$token){
             throw new \Exception("缺少 Authorization 信息",SysCode::ERROR);
         }
-
         if($this->jwt->verify($token) === false){
             throw new \Exception("请重新登录！",SysCode::ERROR);
         }

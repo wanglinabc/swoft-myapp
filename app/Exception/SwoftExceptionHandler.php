@@ -148,4 +148,19 @@ class SwoftExceptionHandler
         return view('exception/index', $data);
     }
 
+    /**
+     * @Handler(HttpException::class)
+     * @param Response $response
+     * @param \Throwable $throwable
+     */
+    public function handleHttpException(Response $response,\Throwable $throwable)
+    {
+        if(empty($throwable->getCode())){
+            $data = $this->message->error( $throwable->getMessage());
+        }else{
+            $data = $this->message->error( $throwable->getMessage(),$throwable->getCode());
+        }
+        return $response->json($data);
+    }
+
 }

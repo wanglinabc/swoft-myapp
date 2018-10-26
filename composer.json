@@ -44,7 +44,8 @@
     "autoload-dev": {
         "psr-4": {
             "Swoft\\Test\\": "test/"
-        }
+        },
+        "files": ["app/Utils/helper.php"]
     },
     "scripts": {
         "post-root-package-install": [

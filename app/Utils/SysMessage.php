@@ -34,7 +34,7 @@ class SysMessage
      * @param array $data 返回数据
      * @return array
      */
-    public function success($code = SysCode::SUCCESS, $data = [], $msg = '')
+    public function success($data = [], $msg = '',$code = SysCode::SUCCESS)
     {
         return ['code' => $code, 'msg' => $msg ?? self::SYSMSG[$code], 'data' => $data];
     }
@@ -59,9 +59,9 @@ class SysMessage
     public function resp($data)
     {
         if (is_array($data)) {
-            return $this->success(SysCode::SUCCESS, $data, SysCode::ERROR);
+            return $this->success($data,SysCode::SUCCESS , SysCode::SUCCESS);
         } else {
-            return $this->error(SysCode::ERROR, '');
+            return $this->error("", SysCode::ERROR);
         }
     }
 }

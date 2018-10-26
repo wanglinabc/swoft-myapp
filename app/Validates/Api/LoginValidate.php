@@ -6,7 +6,7 @@
  * Time: 16:00
  */
 
-namespace App\Validates;
+namespace App\Validates\Api;
 
 use App\Utils\Validate\Validate;
 use Swoft\Bean\Annotation\Bean;

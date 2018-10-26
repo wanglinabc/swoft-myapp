@@ -8,7 +8,7 @@
  * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
-namespace App\Controllers\Api;
+namespace App\Controllers\Admin;
 
 
 use Swoft\App;
@@ -21,7 +21,7 @@ use Swoft\Http\Message\Server\Request;
 
 /**
  * 控制器demo
- * @Controller(prefix="/api/login")
+ * @Controller(prefix="/admin/login/")
  */
 class AuthController
 {
