@@ -27,7 +27,7 @@ use App\Utils\JwtToken;
 class JwtMiddleware implements MiddlewareInterface
 {
 
-    protected $is_allow=['/api/login/index','/admin/login/index','/api/login/logout'];
+    protected $is_allow=['/api/login/index','/admin/login/index','/api/login/logout','/api/login/register','/api/login/userexis'];
 
     /**
      * @Inject()

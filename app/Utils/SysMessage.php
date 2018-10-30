@@ -36,7 +36,11 @@ class SysMessage
      */
     public function success($data = [], $msg = '',$code = SysCode::SUCCESS)
     {
-        return ['code' => $code, 'msg' => $msg ?? self::SYSMSG[$code], 'data' => $data];
+        $return_data= ['code' => $code, 'msg' => $msg ?? self::SYSMSG[$code], 'data' => $data];
+        if(empty($return_data['data'])){
+            unset($return_data['data']);
+        }
+        return $return_data;
     }
 
     /**
