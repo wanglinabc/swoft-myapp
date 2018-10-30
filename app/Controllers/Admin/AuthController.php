@@ -37,7 +37,7 @@ class AuthController
     public function index(Request $request)
     {
 
-
+       return   ['test'=>'swoft'];
 
     }
 

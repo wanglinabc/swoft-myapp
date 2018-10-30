@@ -34,12 +34,12 @@ class JwtToken
      * @param array $param
      * @return string
      */
-    public function encode(array $param): string
+    public function encode(array $param,$time=self::EXPIRE_TIME): string
     {
         if (!is_array($param)) {
             throw new \Exception("jwt Payload  must be a array");
         }
-        $param['expire_time']=time()+self::EXPIRE_TIME;//设置token有效期
+        $param['expire_time']=time()+$time;//设置token有效期
         return JWT::encode($param, self::jwt_key);
     }
 
