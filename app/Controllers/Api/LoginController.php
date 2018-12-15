@@ -18,10 +18,10 @@ use Swoft\Http\Server\Bean\Annotation\RequestMethod;
 
 /**
  *
- * @Controller(prefix="/api/login/")
+ * @Controller(prefix="/login/")
  *
  */
-class LoginController
+class LoginController extends BaseController
 {
 
 

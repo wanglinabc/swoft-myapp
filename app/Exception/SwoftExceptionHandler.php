@@ -2,15 +2,16 @@
 /**
  * This file is part of Swoft.
  *
- * @link https://swoft.org
+ * @see https://swoft.org
  * @document https://doc.swoft.org
  * @contact group@swoft.org
+ *
  * @license https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 
 namespace App\Exception;
 
-use App\Utils\SysMessage;
+use App\Utils\Message;
 use Swoft\App;
 use Swoft\Bean\Annotation\ExceptionHandler;
 use Swoft\Bean\Annotation\Handler;
@@ -23,45 +24,47 @@ use Swoft\Exception\BadMethodCallException;
 use Swoft\Exception\ValidatorException;
 use Swoft\Http\Server\Exception\BadRequestException;
 
-
 /**
- * the handler of global exception
+ * the handler of global exception.
  *
  * @ExceptionHandler()
- * @uses      Handler
+ *
+ * @uses      \Handler
+ *
  * @version   2018年01月14日
+ *
  * @author    stelin <phpcrazy@126.com>
  * @copyright Copyright 2010-2016 swoft software
  * @license   PHP Version 7.x {@link http://www.php.net/license/3_0.txt}
  */
 class SwoftExceptionHandler
 {
-
     /**
-     *
      * @Inject()
-     * @var SysMessage
+     *
+     * @var Message
      */
     protected $message;
 
     /**
      * @Handler(Exception::class)
      *
-     * @param Response $response
+     * @param Response   $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerException(Response $response, \Throwable $throwable)
     {
-        $data = $this->message->error( $throwable->getMessage(),$throwable->getCode());
+        $data = $this->message->error($throwable->getCode(), $throwable->getMessage());
+
         return $response->json($data);
     }
 
     /**
      * @Handler(RuntimeException::class)
      *
-     * @param Response $response
+     * @param Response   $response
      * @param \Throwable $throwable
      *
      * @return Response
@@ -78,7 +81,7 @@ class SwoftExceptionHandler
     /**
      * @Handler(ValidatorException::class)
      *
-     * @param Response $response
+     * @param Response   $response
      * @param \Throwable $throwable
      *
      * @return Response
@@ -93,7 +96,7 @@ class SwoftExceptionHandler
     /**
      * @Handler(BadRequestException::class)
      *
-     * @param Response $response
+     * @param Response   $response
      * @param \Throwable $throwable
      *
      * @return Response
@@ -108,15 +111,15 @@ class SwoftExceptionHandler
     /**
      * @Handler(BadMethodCallException::class)
      *
-     * @param Request $request
-     * @param Response $response
+     * @param Request    $request
+     * @param Response   $response
      * @param \Throwable $throwable
      *
      * @return Response
      */
     public function handlerViewException(Request $request, Response $response, \Throwable $throwable)
     {
-        $name = $throwable->getMessage() . $request->getUri()->getPath();
+        $name = $throwable->getMessage().$request->getUri()->getPath();
         $notes = [
             'New Generation of PHP Framework',
             'High Performance, Coroutine and Full Stack',
@@ -150,17 +153,14 @@ class SwoftExceptionHandler
 
     /**
      * @Handler(HttpException::class)
-     * @param Response $response
+     *
+     * @param Response   $response
      * @param \Throwable $throwable
      */
-    public function handleHttpException(Response $response,\Throwable $throwable)
+    public function handleHttpException(Response $response, \Throwable $throwable)
     {
-        if(empty($throwable->getCode())){
-            $data = $this->message->error( $throwable->getMessage());
-        }else{
-            $data = $this->message->error( $throwable->getMessage(),$throwable->getCode());
-        }
+        $data = $this->message->error($throwable->getCode(), $throwable->getMessage());
+
         return $response->json($data);
     }
-
 }
