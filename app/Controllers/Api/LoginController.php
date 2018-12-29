@@ -9,6 +9,7 @@
 namespace App\Controllers\Api;
 
 
+use App\Bean\RateLimit\Bean\Annotation\RateLimit;
 use App\Services\LoginService;
 use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Message\Server\Request;
@@ -18,12 +19,11 @@ use Swoft\Http\Server\Bean\Annotation\RequestMethod;
 
 /**
  *
- * @Controller(prefix="/login/")
+ * @Controller(prefix="/Auth/")
  *
  */
 class LoginController extends BaseController
 {
-
 
     /**
      * @Inject()
@@ -31,8 +31,11 @@ class LoginController extends BaseController
      */
     protected $loginService;
 
+
     /**
+     * 用户登录
      * @RequestMapping(route="index", method={RequestMethod::POST})
+     * @RateLimit(limit=2)
      * @param Request $requests
      * @return array
      */
@@ -64,10 +67,11 @@ class LoginController extends BaseController
      */
    public function userExis(Request $request):array
    {
-       $username=$request->json('username');
-       $result=$this->loginService->userExis($username);
+       $loginName=$request->json('login_name');
+       $result=$this->loginService->userExis($loginName);
        return $result;
    }
+
 
     /**
      * @RequestMapping(route="logout",method={RequestMethod::POST})

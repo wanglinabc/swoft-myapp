@@ -44,16 +44,16 @@ class JwtMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $uri = $request->getUri();
-        if(in_array($uri->getPath(),$this->is_allow)){
+        $requestUrl = $request->getUri();
+        if(in_array($requestUrl->getPath(),$this->is_allow)){
             return $handler->handle($request);
         }
        $token=$request->getHeaderLine('Authorization');
         if(!$token){
-            throw new \Exception("缺少 Authorization 信息",SysCode::ERROR);
+            error_exit(SysCode::USER_NEED_LOGIN_AGIGN,"缺少token参数！");
         }
         if($this->jwt->verify($token) === false){
-            throw new \Exception("请重新登录！",SysCode::ERROR);
+            error_exit(SysCode::USER_NEED_LOGIN_AGIGN);
         }
         return $handler->handle($request);
     }

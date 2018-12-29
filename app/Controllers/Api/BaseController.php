@@ -9,27 +9,32 @@
 namespace App\Controllers\Api;
 
 
-use Swoft\App;
+use App\Utils\SysCode;
+use Inhere\Validate\Validation;
 
 class BaseController
 {
 
 
-  public function __construct()
-  {
+    public function __construct()
+    {
 
-  }
+    }
 
-
-  public function validate(array $data,string $name):?bool
-  {
-        $validate=App::getBean($name);
-        if(!empty($validate)){
-             $result=$validate->check($data);
-             if($result !== true){
-                 error_exit($validate->getError());
-             }
+    /**
+     * 验证器
+     * @param array $data
+     * @param array $rules
+     * @return bool|null
+     * @throws \app\Exception\HttpException
+     */
+    public function validate(array $data, array $rules): void
+    {
+        if ($data && $rules) {
+            $checkStatus = Validation::check($data, $rules);
+            if ($checkStatus->fail()) {
+                error_exit(SysCode::PARAMS_VALID_ERROR, $checkStatus->firstError());
+            }
         }
-      error_exit("验证器{$name}不存在！");
-  }
+    }
 }

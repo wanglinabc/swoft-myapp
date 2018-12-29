@@ -8,10 +8,11 @@
 
 namespace App\Services;
 
+use App\Exception\HttpException;
 use App\Utils\JwtToken;
-use App\Utils\SysMessage;
+use App\Utils\Message;
+use App\Utils\SysCode;
 use App\Utils\Util;
-use Swoft\App;
 use Swoft\Bean\Annotation\Bean;
 use App\Models\Entity\User;
 use Swoft\Bean\Annotation\Inject;
@@ -24,18 +25,17 @@ use Swoft\Db\Query;
  */
 class LoginService extends BaseService
 {
+
     /**
      * @Inject()
-     * @var SysMessage
+     * @var Message
      */
-    protected $message;
-
+    private $message;
     /**
      * @Inject()
      * @var JwtToken
      */
     protected $Jwt;
-
 
     /**
      * 用户登录
@@ -45,35 +45,39 @@ class LoginService extends BaseService
      */
     public function login(array $param): array
     {
-        $user2 = Query::table(User::class)->where('username', $param['username'])->orWhere("mobile", $param['username'])->limit(1)->get()->getResult();
-        if (!$user2) {
-            return $this->message->error("用户不存在！");
+        $userData = Query::table(User::class)->where('username', $param['username'])->orWhere("mobile", $param['username'])->limit(1)->get()->getResult();
+        if (empty($userData)) {
+             error_exit(SysCode::USER_NOT_EXIST);
         }
-        $data=$user2[0];
-        $passwd = md5($param['password'] . $data['salt']);
-        if ($passwd != $data['password']) {
-            return $this->message->error("密码错误！");
+        $userData=current($userData);
+        $passwd = md5($param['password'] . $userData['salt']);
+        if ($passwd != $userData['password']) {
+            error_exit(SysCode::USER_PASSWORD_ERROE);
         }
-        $token = $this->Jwt->encode(['userId' => $data['id'], 'username' => $data['username']]);
+        $token = $this->Jwt->encode(['userId' => $userData['id'], 'username' => $userData['username']]);
         return $this->message->success(['token' => $token], "登录成功");
     }
 
     /**
      * 注册用户
      * @param array $params
+     * @throws HttpException
      * @return array
      */
     public function register(array $params): array
     {
         $user = new User();
-        $user->setUsername($params['username']);
-        $user->setRealname(($params['username']));
-        $user->setMobile($params['mobile']);
+        if(preg_match("/^1[34578]\d{9}$/",$params['login_name'])){
+            $user->setMobile($params['login_name']);
+        }else{
+            $user->setUsername($params['login_name']);
+            $user->setRealname(($params['login_name']));
+        }
         $user->setSalt(Util::randStr());
         $user->setPassword(md5($params['password'] . $user->getSalt()));
         $id = $user->save()->getResult();
         if (empty($id)) {
-            error_exit("注册失败！");
+            error_exit(SysCode::USER_REGISTER_FAILURE);
         }
         return $this->message->success([], "注册成功");
     }
@@ -81,16 +85,21 @@ class LoginService extends BaseService
 
     /**
      * 注册时判断用户名是否存在
-     * @param string $username
+     * @param string $loginName
+     * @throws HttpException
      * @return array
      */
-    public function userExis(string $username): array
+    public function userExis(string $loginName): array
     {
-        $data = User::findOne(['username' => $username], ['fields' => ['id']])->getResult();
-        if (empty($data)) {
-            return $this->message->success([], "可正常注册");
+        $params['username']=$loginName;
+        if(preg_match("/^1[34578]\d{9}$/",$loginName)){
+            $params['mobile']=$loginName;
         }
-        return $this->message->error("用户已存在！");
+        $data = User::findOne($params, ['fields' => ['id']])->getResult();
+        if (!empty($data)) {
+          error_exit(SysCode::USER_HAS_ALEADY_EXIST);
+        }
+        return $this->message->success([], "可正常注册");
     }
 
 

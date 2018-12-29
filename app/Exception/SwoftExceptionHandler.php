@@ -153,7 +153,6 @@ class SwoftExceptionHandler
 
     /**
      * @Handler(HttpException::class)
-     *
      * @param Response   $response
      * @param \Throwable $throwable
      */

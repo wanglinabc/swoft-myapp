@@ -26,8 +26,11 @@ class JwtToken
     //加密秘钥
     const jwt_key = "RichardLin";
 
+    /**
+     * 加密主要参数信息
+     * @var array
+     */
     public $Payload = [];
-
 
     /**
      * 创建jwttoken
@@ -72,7 +75,6 @@ class JwtToken
             return false;
         }
         return true;
-
     }
 
     /**

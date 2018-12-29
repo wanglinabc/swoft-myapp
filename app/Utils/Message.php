@@ -35,7 +35,6 @@ class Message
         if (empty($return_data['data'])) {
             unset($return_data['data']);
         }
-
         return $return_data;
     }
 

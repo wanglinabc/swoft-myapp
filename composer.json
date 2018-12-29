@@ -10,7 +10,7 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=7.0",
-        "ext-swoole": ">=2.1",
+        "ext-swoole":" >=2.1",
         "swoft/framework": "^1.0",
         "swoft/rpc": "^1.0",
         "swoft/rpc-server": "^1.0",
@@ -31,7 +31,8 @@
         "swoft/process": "^1.0",
         "swoft/memory": "^1.0",
         "swoft/service-governance": "^1.0",
-        "firebase/php-jwt": "^5.0"
+        "firebase/php-jwt": "^5.0",
+        "inhere/php-validate": "^2.5"
     },
     "require-dev": {
         "swoft/swoole-ide-helper": "dev-master"
