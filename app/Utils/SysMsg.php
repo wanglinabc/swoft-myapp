@@ -1,6 +1,5 @@
 <?php
-
-use App\Utils\SysCode;
+namespace App\Utils;
 
 class SysMsg
 {
