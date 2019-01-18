@@ -13,9 +13,10 @@ return [
     'version'      => '1.0',
     'autoInitBean' => true,
     'bootScan'     => [
-        'App\Commands',
-        'App\Boot',
-        'App\WebSocket',
+        'App\Controllers',
+        'App\Models',
+        'App\Middlewares',
+        'App\Exception',
     ],
     'excludeScan'  => [
 
