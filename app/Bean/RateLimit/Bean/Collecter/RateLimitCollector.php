@@ -6,8 +6,6 @@ use App\Bean\RateLimit\Bean\Annotation\RateLimit;
 use Swoft\Bean\CollectorInterface;
 /**
  * the collector of controller
- *
- * @uses      RateLimitCollector
  * @version   2018年01月07日
  * @author    stelin <phpcrazy@126.com>
  * @copyright Copyright 2010-2016 swoft software
