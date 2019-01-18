@@ -9,6 +9,9 @@
 namespace App\Controllers\Api;
 
 
+
+use App\Bean\RateLimit\Annotation\RateLimit;
+use App\Bean\RateLimit\Collector\RateLimitCollector;
 use App\Services\LoginService;
 use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Message\Server\Request;
@@ -18,7 +21,8 @@ use Swoft\Http\Server\Bean\Annotation\RequestMethod;
 
 /**
  *
- * @Controller(prefix="/Auth/")
+ * @Controller(prefix="/login/")
+ * @RateLimit(1)
  *
  */
 class LoginController extends BaseController
@@ -34,6 +38,7 @@ class LoginController extends BaseController
     /**
      * 用户登录
      * @RequestMapping(route="index", method={RequestMethod::POST})
+     * @RateLimit(limit=50)
      * @param Request $requests
      * @return array
      * @throws
@@ -48,6 +53,7 @@ class LoginController extends BaseController
     /**
      * 用户注册
      * @RequestMapping(route="register",method={RequestMethod::POST})
+     * @RateLimit(100)
      * @param Request $request
      * @return array
      * @throws

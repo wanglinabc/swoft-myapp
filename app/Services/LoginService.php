@@ -66,12 +66,13 @@ class LoginService extends BaseService
      */
     public function register(array $params): array
     {
+        $this->userExis($params['username']);
         $user = new User();
-        if(preg_match("/^1[34578]\d{9}$/",$params['login_name'])){
-            $user->setMobile($params['login_name']);
+        if(preg_match("/^1[34578]\d{9}$/",$params['username'])){
+            $user->setMobile($params['username']);
         }else{
-            $user->setUsername($params['login_name']);
-            $user->setRealname(($params['login_name']));
+            $user->setUsername($params['username']);
+            $user->setRealname(($params['username']));
         }
         $user->setSalt(Util::randStr());
         $user->setPassword(md5($params['password'] . $user->getSalt()));

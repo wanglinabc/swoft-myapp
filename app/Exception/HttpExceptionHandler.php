@@ -18,7 +18,8 @@ use Swoft\Bean\Annotation\Inject;
 use Exception;
 use Swoft\Http\Message\Server\Response;
 use Swoft\Exception\ValidatorException;
-
+use Swoft\Exception\RuntimeException;
+use Swoft\Http\Server\Exception\BadRequestException;
 
 /**
  * the handler of global exception.
@@ -36,7 +37,8 @@ use Swoft\Exception\ValidatorException;
 class HttpExceptionHandler
 {
 
-    /**@Inject()
+    /**
+     * @Inject()
      * @var Message
      */
     protected $message;
@@ -49,6 +51,35 @@ class HttpExceptionHandler
     public function handlerException(Response $response, \Throwable $throwable)
     {
         return $response->json($this->message->error($throwable->getCode(), $throwable->getMessage()));
+    }
+
+    /**
+     * @Handler(RuntimeException::class)
+     *
+     * @param Response   $response
+     * @param \Throwable $throwable
+     *
+     * @return Response
+     */
+    public function handlerRuntimeException(Response $response, \Throwable $throwable)
+    {
+        $file      = $throwable->getFile();
+        $code      = $throwable->getCode();
+        $exception = $throwable->getMessage();
+        return $response->json([$exception, 'runtimeException']);
+    }
+    /**
+     * @Handler(BadRequestException::class)
+     *
+     * @param Response   $response
+     * @param \Throwable $throwable
+     *
+     * @return Response
+     */
+    public function handlerBadRequestException(Response $response, \Throwable $throwable)
+    {
+        $exception = $throwable->getMessage();
+        return $response->json(['message' => $exception]);
     }
 
 
