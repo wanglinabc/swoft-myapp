@@ -9,7 +9,6 @@
 namespace App\Controllers\Api;
 
 
-use App\Bean\RateLimit\Bean\Annotation\RateLimit;
 use App\Services\LoginService;
 use Swoft\Bean\Annotation\Inject;
 use Swoft\Http\Message\Server\Request;
