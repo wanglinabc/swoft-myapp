@@ -14,8 +14,8 @@ use Swoft\App;
 use Swoft\Bean\Annotation\Around;
 use Swoft\Bean\Annotation\Aspect;
 use App\Bean\RateLimit\Bean\Annotation\RateLimit;
+use App\Bean\RateLimit\Bean\Collector\RateLimitCollector;
 use Swoft\Bean\Annotation\PointAnnotation;
-use Swoft\Http\Server\Bean\Collector\RateLimitCollector;
 
 /**
  * Class RateLimitAspect

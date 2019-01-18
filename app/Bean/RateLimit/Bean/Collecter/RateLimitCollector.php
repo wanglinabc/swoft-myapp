@@ -1,6 +1,6 @@
 <?php
 
-namespace Swoft\Http\Server\Bean\Collector;
+namespace App\Bean\RateLimit\Bean\Collector;
 
 use App\Bean\RateLimit\Bean\Annotation\RateLimit;
 use Swoft\Bean\CollectorInterface;

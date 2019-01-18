@@ -1,19 +1,9 @@
 <?php
 
-namespace Swoft\Http\Server\Bean\Wrapper;
+namespace App\Bean\RateLimit\Bean\Wrapper;
 
-use Swoft\Bean\Annotation\Enum;
-use Swoft\Bean\Annotation\Floats;
-use Swoft\Bean\Annotation\Inject;
-use Swoft\Bean\Annotation\Integer;
-use Swoft\Http\Message\Bean\Annotation\Middleware;
-use Swoft\Http\Message\Bean\Annotation\Middlewares;
-use Swoft\Bean\Annotation\Number;
-use Swoft\Bean\Annotation\Strings;
-use Swoft\Bean\Annotation\Value;
 use Swoft\Bean\Wrapper\AbstractWrapper;
-use Swoft\Http\Server\Bean\Annotation\Controller;
-use Swoft\Http\Server\Bean\Annotation\RequestMapping;
+
 
 use App\Bean\RateLimit\Bean\Annotation\RateLimit;
 

@@ -26,7 +26,6 @@ class Message
      * @param string $msg  成功消息
      * @param int    $code 返回码
      * @param array  $data 返回数据
-     *
      * @return array
      */
     public function success(array $data = [], string $msg = '', int $code = SysCode::SUCCESS): array

@@ -38,6 +38,7 @@ class LoginController extends BaseController
      * @RateLimit(limit=2)
      * @param Request $requests
      * @return array
+     * @throws
      */
     public function index(Request $request):array
     {
@@ -51,6 +52,7 @@ class LoginController extends BaseController
      * @RequestMapping(route="register",method={RequestMethod::POST})
      * @param Request $request
      * @return array
+     * @throws
      */
     public function register(Request $request):array
     {
@@ -64,6 +66,7 @@ class LoginController extends BaseController
      * @RequestMapping(route="userexis",method={RequestMethod::POST})
      * @param Request $request
      * @return array
+     * @throws
      */
    public function userExis(Request $request):array
    {
@@ -77,6 +80,7 @@ class LoginController extends BaseController
      * @RequestMapping(route="logout",method={RequestMethod::POST})
      * @param Request $request
      * @return array
+     * @throws
      */
     public function decode(Request $request){
         $params=$request->input("token");
