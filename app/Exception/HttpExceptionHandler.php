@@ -15,13 +15,10 @@ use App\Utils\Message;
 use Swoft\Bean\Annotation\ExceptionHandler;
 use Swoft\Bean\Annotation\Handler;
 use Swoft\Bean\Annotation\Inject;
-use Swoft\Exception\RuntimeException;
 use Exception;
-use Swoft\Http\Message\Server\Request;
 use Swoft\Http\Message\Server\Response;
-use Swoft\Exception\BadMethodCallException;
 use Swoft\Exception\ValidatorException;
-use Swoft\Http\Server\Exception\BadRequestException;
+
 
 /**
  * the handler of global exception.

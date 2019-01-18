@@ -13,7 +13,6 @@
 namespace App\Utils;
 
 use Swoft\Bean\Annotation\Bean;
-use SysMsg;
 
 /**
  * @Bean()
