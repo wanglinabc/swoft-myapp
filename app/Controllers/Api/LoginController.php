@@ -34,7 +34,6 @@ class LoginController extends BaseController
     /**
      * 用户登录
      * @RequestMapping(route="index", method={RequestMethod::POST})
-     * @RateLimit(limit=2)
      * @param Request $requests
      * @return array
      * @throws
