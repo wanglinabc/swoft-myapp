@@ -17,24 +17,11 @@ use App\Bean\RateLimit\Bean\Annotation\RateLimit;
 use App\Bean\RateLimit\Bean\Collector\RateLimitCollector;
 use Swoft\Bean\Annotation\PointAnnotation;
 
-/**
- * Class RateLimitAspect
- * @package App\Bean\Aop
- * @Aspect()
- * @PointAnnotation({
- *     include={
- *          RateLimit::class
- *     }
- *     )
- */
+
 class RateLimitAspect
 {
 
-    /**
-     * @Around()
-     * @param ProceedingJoinPoint $proceedingJoinPoint
-     * @return mixed
-     */
+
  public function around(ProceedingJoinPoint $proceedingJoinPoint)
  {
      $objectAnnotation=$this->getAnnotation($proceedingJoinPoint);//获取注解对象
