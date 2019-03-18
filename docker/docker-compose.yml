@@ -17,7 +17,7 @@ services:
          - ./nginx.conf:/etc/nginx/nginx.conf
          - /data/nginx/log/:/var/log/nginx/
       ports:
-          - 80:80
+          - 9090:80
       links: 
           - swoft-app   
 
